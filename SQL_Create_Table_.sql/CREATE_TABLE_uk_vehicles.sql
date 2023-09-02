@@ -1,5 +1,5 @@
 CREATE TABLE uk_vehicles (
-    Accident_Index BIGINT,
+    Accident_Index VARCHAR(20),
     Vehicle_Reference INT,
     Vehicle_Type INT,
     Towing_and_Articulation INT,
@@ -22,5 +22,5 @@ CREATE TABLE uk_vehicles (
     Driver_IMD_Decile INT,
     Driver_Home_Area_Type INT,
     Vehicle_IMD_Decile INT,
-    FOREIGN KEY (Accident_Index) REFERENCES uk_accidents(Accident_Index)
+   -- FOREIGN KEY (Accident_Index) REFERENCES uk_accidents(Accident_Index)
 );

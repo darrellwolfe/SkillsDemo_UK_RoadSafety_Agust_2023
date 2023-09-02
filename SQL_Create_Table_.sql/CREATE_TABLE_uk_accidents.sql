@@ -1,5 +1,12 @@
+
+
+--DROP TABLE uk_vehicles
+--DROP TABLE uk_casualties
+--DROP TABLE uk_accidents
+
+
 CREATE TABLE uk_accidents (
-    Accident_Index BIGINT PRIMARY KEY,
+    Accident_Index VARCHAR(20),
     Location_Easting_OSGR INT,
     Location_Northing_OSGR INT,
     Longitude FLOAT,
@@ -8,7 +15,7 @@ CREATE TABLE uk_accidents (
     Accident_Severity INT,
     Number_of_Vehicles INT,
     Number_of_Casualties INT,
-    UK_Date VARCHAR(10),
+    Date VARCHAR(10),
     Day_of_Week INT,
     Time TIME,
     Local_Authority_District INT,
@@ -32,3 +39,4 @@ CREATE TABLE uk_accidents (
     Did_Police_Officer_Attend_Scene_of_Accident INT,
     LSOA_of_Accident_Location VARCHAR(10)
 );
+

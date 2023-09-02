@@ -26,7 +26,13 @@
 
 ### Extract
 
--   
+-   Created three tables
+uk_accidents
+uk_vehicles
+uk_casualties
+
+Importing 2016 ran into an issue with Speed Limit column, where there were strings of NULL intead of true null values. I ran a find/replace NULL for "" on the entire workbook. Same issue with the 2017 Accidents in the Lat/Long columns.
+
 
 ------------------------------------------------------------------------
 
