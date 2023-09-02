@@ -15,7 +15,7 @@ CREATE TABLE uk_accidents (
     Accident_Severity INT,
     Number_of_Vehicles INT,
     Number_of_Casualties INT,
-    Date VARCHAR(10),
+    Date VARCHAR(15),
     Day_of_Week INT,
     Time TIME,
     Local_Authority_District INT,
@@ -37,6 +37,6 @@ CREATE TABLE uk_accidents (
     Carriageway_Hazards INT,
     Urban_or_Rural_Area INT,
     Did_Police_Officer_Attend_Scene_of_Accident INT,
-    LSOA_of_Accident_Location VARCHAR(10)
+    LSOA_of_Accident_Location VARCHAR(20)
 );
 

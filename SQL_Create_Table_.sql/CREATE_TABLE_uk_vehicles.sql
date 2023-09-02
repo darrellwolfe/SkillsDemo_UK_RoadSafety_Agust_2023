@@ -11,7 +11,7 @@ CREATE TABLE uk_vehicles (
     Vehicle_Leaving_Carriageway INT,
     Hit_Object_off_Carriageway INT,
     First_Point_of_Impact INT,
-    Was_Vehicle_Left_Hand_Drive BIT,
+    Was_Vehicle_Left_Hand_Drive BIT, -- Update to INT
     Journey_Purpose_of_Driver INT,
     Sex_of_Driver INT,
     Age_of_Driver INT,
@@ -24,3 +24,6 @@ CREATE TABLE uk_vehicles (
     Vehicle_IMD_Decile INT,
    -- FOREIGN KEY (Accident_Index) REFERENCES uk_accidents(Accident_Index)
 );
+
+ALTER TABLE uk_vehicles
+ALTER COLUMN Was_Vehicle_Left_Hand_Drive INT;
