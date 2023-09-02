@@ -1,0 +1,53 @@
+# UK Road Safety Data
+
+## Amplify Consulting Partners, Interview Test
+
+------------------------------------------------------------------------
+
+### ETL First Impressions
+
+-   Upon receiveing and extracting the 'UKRoadSafetyData.zip' file, I notice there are additional zip files.
+
+-   Within each zip file is a single .csv or .xls file.
+
+-   Several of these files are missing naming conventions that match other similar files.
+
+-   The 2015 data is in a single zip, and these are also not following later file naming conventions, and yet more 2015 files exist with apparently duplicate data.
+
+-   Both 2015 Accidents files begin with '201501BS70001' in cell A2 and contain 140057 rows. But within looking further, there is not guarantee these have exactly duplicate data. This will require review.
+
+    -   Checked through Power Query, matching both sets of data on for each duplicate (Accidents, Casualties, and Vehicles for 2015). Both sets are a perfect Match. Only need to import one set.
+
+-   The Variable Lookup is a set of codes tables. One question is whether I will want to keep these as separate tables, or perform a single codes_table combination.
+
+    -   The codes tables can remain separate, but it would require more write scripts. If I combine them into a single table, they could be more manageable.
+
+------------------------------------------------------------------------
+
+### Extract
+
+-   
+
+------------------------------------------------------------------------
+
+### Transform
+
+------------------------------------------------------------------------
+
+### Load
+
+------------------------------------------------------------------------
+
+### xxxxxx
+
+------------------------------------------------------------------------
+
+### xxxxxx
+
+------------------------------------------------------------------------
+
+### xxxxxx
+
+------------------------------------------------------------------------
+
+### xxxxxx

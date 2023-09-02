@@ -1,0 +1,16 @@
+# Amplify_Interview_Test
+## UK Road Safety Data_Interview Test
+
+### Instructions
+We are delighted to invite you to the next phase of our interview process. You will find a link to UK Road Safety Data below. Please use the data below to showcase the following skills:  
+
+-  ETL Process  
+-  Data Visualizations 
+-  Data Modeling 
+-  Time Management
+
+[Link to dataset -](https://interviewfiles.blob.core.windows.net/ukroadsafetydata/UKRoadSafetyData.zip)
+
+Ultimately the goal is to show us something interesting via a dashboard/report using your favorite tools in an approximately 20-minute presentation. There is no traditional “right answer”, we are looking for how you work with data and communicate insights.  
+
+Let me know if you have any questions!
