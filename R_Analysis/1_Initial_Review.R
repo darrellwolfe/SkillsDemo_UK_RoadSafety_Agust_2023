@@ -73,6 +73,12 @@ mean(UK_AccidentData$Number_of_Vehicles)
 mean(UK_AccidentData$Number_of_Casualties)
 mean(UK_AccidentData$Accident_Severity)
 
+median()
+
+median(UK_AccidentData$Number_of_Vehicles)
+median(UK_AccidentData$Number_of_Casualties)
+median(UK_AccidentData$Accident_Severity)
+
 UK_AccidentData %>% 
   drop_na(Speed_limit) %>% 
   mean(UK_AccidentData$Speed_limit)
