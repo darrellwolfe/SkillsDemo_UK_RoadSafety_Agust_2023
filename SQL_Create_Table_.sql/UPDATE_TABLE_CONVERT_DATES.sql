@@ -1,4 +1,4 @@
-
+-- Started over in Power Query and re-imported. Saving for future Reference.
 
 DELETE uk_accidents
 
@@ -14,6 +14,37 @@ ALTER COLUMN LSOA_of_Accident_Location VARCHAR(20);
 ALTER TABLE uk_accidents
 DROP COLUMN US_Date;
 
+
+
+
+WITH CTE AS (
+  SELECT
+    Accident_Index
+,    ROW_NUMBER() OVER (PARTITION BY Accident_Index ORDER BY (SELECT NULL)) AS rn
+  FROM uk_accidents
+)
+
+SELECT *
+FROM CTE
+WHERE rn < 1
+
+
+
+WITH CTE AS (
+  SELECT
+    Accident_Index
+,   Number_of_Vehicles
+,   Number_of_Casualties
+,   Date
+,   Time
+,    ROW_NUMBER() OVER (PARTITION BY Accident_Index ORDER BY (SELECT NULL)) AS rn
+  FROM uk_accidents
+)
+
+SELECT *
+FROM CTE
+WHERE rn > 1
+
 -- Delete Duplicates
 WITH CTE AS (
   SELECT 
@@ -25,9 +56,9 @@ DELETE FROM CTE WHERE rn > 1;
 --    (203308 row(s) affected)
 
 
-
-
-
+SELECT *
+FROM uk_accidents 
+WHERE Accident_Index IS NULL;
 
 
 --Delete NULLs

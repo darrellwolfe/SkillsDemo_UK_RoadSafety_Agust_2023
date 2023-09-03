@@ -1,5 +1,6 @@
 SELECT TOP 100 *
 FROM uk_accidents
+ORDER BY Date DESC
 
 
 SELECT TOP 100 *
@@ -50,7 +51,7 @@ WHERE a.Accident_Index IS NULL;
   SELECT *
   FROM CTE_CheckDupsC
  WHERE Accident_Index = '201604ED16270'
- -- WHERE rn > 1
+-- WHERE rn > 1
   ORDER BY CTE_CheckDupsC.Accident_Index
 
 

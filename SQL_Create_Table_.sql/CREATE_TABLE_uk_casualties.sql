@@ -15,5 +15,7 @@ CREATE TABLE uk_casualties (
     Casualty_Type INT,
     Casualty_Home_Area_Type INT,
     Casualty_IMD_Decile INT,
-   -- FOREIGN KEY (Accident_Index) REFERENCES uk_accidents(Accident_Index)
 );
+
+
+   -- FOREIGN KEY (Accident_Index) REFERENCES uk_accidents(Accident_Index)

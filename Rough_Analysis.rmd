@@ -1,6 +1,24 @@
 # UK Road Safety Data
 
-## Amplify Consulting Partners, Interview Test
+------------------------------------------------------------------------
+
+### Important Information
+
+The UKRoadSafetyData.zip was provided to me to use as test data for analysis practice and demonstration.
+
+#### Tools
+
+-   Microsoft Sequal Server Management Studio
+-   Microsoft Visual Studio 2022
+-   Microsoft Excel (Power Query, CSVs)
+-   Posit RStudio
+-   Tableau Public
+
+#### Languages
+
+-   SQL
+-   R
+
 
 ------------------------------------------------------------------------
 
@@ -11,36 +29,70 @@
 -   Within each zip file is a single .csv or .xls file.
 
 -   Several of these files are missing naming conventions that match other similar files.
+    + Renamed files for consistency if needed later.
 
 -   The 2015 data is in a single zip, and these are also not following later file naming conventions, and yet more 2015 files exist with apparently duplicate data.
-
--   Both 2015 Accidents files begin with '201501BS70001' in cell A2 and contain 140057 rows. But within looking further, there is not guarantee these have exactly duplicate data. This will require review.
-
-    -   Checked through Power Query, matching both sets of data on for each duplicate (Accidents, Casualties, and Vehicles for 2015). Both sets are a perfect Match. Only need to import one set.
+    +   Both 2015 Accidents files begin with '201501BS70001' in cell A2 and contain 140057 rows. 
+    +   But without looking further, there is not guarantee these have exactly duplicate data. This will require review.
+    +   Checked through Power Query, matching both sets of data on for each duplicate (Accidents, Casualties, and Vehicles for 2015). 
+    +   Both sets are a perfect Match. Only need to import one set.
 
 -   The Variable Lookup is a set of codes tables. One question is whether I will want to keep these as separate tables, or perform a single codes_table combination.
-
-    -   The codes tables can remain separate, but it would require more write scripts. If I combine them into a single table, they could be more manageable.
+    +   The codes tables can remain separate, but it would require more write scripts. 
+    +   If I combine them into a single table, they could be more manageable on the import.
+    +   However, I may not need to import these into my database. They may only be needed while visualizing the findings, in which case I can wait until I import them to Tableau. TBD.
 
 ------------------------------------------------------------------------
 
-### Extract
+### Extract, Transform, Load (ETL)
+
+#### Visual Studio 2022 + SQL
 
 -   Created three tables
 uk_accidents
 uk_vehicles
 uk_casualties
 
-Importing 2016 ran into an issue with Speed Limit column, where there were strings of NULL intead of true null values. I ran a find/replace NULL for "" on the entire workbook. Same issue with the 2017 Accidents in the Lat/Long columns.
+-   Importing Accidents 2016 ran into an issue with Speed Limit column, where there were strings of NULL intead of true null values. 
+    +   Same issue with the 2017 Accidents in the Lat/Long columns.
+    +   I ran a find/replace NULL for "" on the entire workbook.
+
+-   Accidents table: Date
+    +   Dates were formatted as text in dd/mm/yyyy format. When importing and converting, they were truncated.
+    +   In power query, ran a transformation and re-saved the CSVs.
+    +   After some difficulty getting dates formatting, and a bit of help from Google and ChatGPT-4, the dates finally worked out.
+
+-   Checking for duplicates in the other tables revealed that while there are duplicate Accident_Index IDs, they are properly not duplicate observations.
+    +   Running the following script is an example of how they are not actually duplicates:
+
+``` {sql}
+  WITH CTE_CheckDupsC AS (
+    SELECT *
+--    c.Accident_Index
+--,   c.Casualty_Reference
+,    ROW_NUMBER() OVER (PARTITION BY Accident_Index, Casualty_Reference ORDER BY (SELECT NULL)) AS rn
+  FROM uk_casualties AS c
+  )
+
+  SELECT *
+  FROM CTE_CheckDupsC
+ WHERE Accident_Index = '201604ED16270'
+-- WHERE rn > 1
+  ORDER BY CTE_CheckDupsC.Accident_Index
+```
 
 
 ------------------------------------------------------------------------
 
-### Transform
+### Analysis
+
+#### RStudio + R
+
+
 
 ------------------------------------------------------------------------
 
-### Load
+###
 
 ------------------------------------------------------------------------
 
