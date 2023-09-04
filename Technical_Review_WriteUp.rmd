@@ -7,9 +7,10 @@ editor_options:
   markdown:
     wrap: 65
 output:
-  word_document: default
+  pdf_document: default
   html_document:
     df_print: paged
+  word_document: default
 ---
 
 # UK Road Safety Data
@@ -1198,12 +1199,23 @@ The data story starts here...
 
 -   Technical Review: Provide the Word Doc and PDF version of the
     Rmd file for those wanting to look into the technical review.
+    -   [UK Road Safety, Technical Analysis, Darrell Wolfe,
+        (Temporary Demo Page - Topos Creative,
+        LLC)](https://www.toposcreative.com/p/uk-road-safety-technical-analysis.html "UK Road Safety, Technical Analysis, Darrell Wolfe, (Temporary Demo Page - Topos Creative, LLC)")
+    -   [Google Drive: Word Doc & PDF
+        Doc](https://drive.google.com/drive/folders/13V8vFDmsK7PdSAw4G9gwAgIaKnnaO2Gy?usp=sharing "Google Drive: Word Doc & PDF Doc")
 -   Tableau Public: Provide link to the Tableau Public
     presentation for the users to click and explore the data.
     -   Dashboards with various views.
     -   Data Story
 -   GitHub: Provide the GitHub link to this project:
-    -   <https://github.com/darrellwolfe/UK_RoadSafety>
+    -   [GitHub_UK Road Safety
+        Repo](https://github.com/darrellwolfe/UK_RoadSafety "GitHub_UK Road Safety Repo")
+-   Google Drive: Provide link to files used for this exercise,
+    including the Power Query transformation and re-organized
+    CSVs.
+    -   [UK Road Safety, Darrell Wolfe Analysis, Google Drive
+        Files](https://drive.google.com/drive/folders/1UukOy77Yc66f9AZWgjCl0mbxBFx1UA2u?usp=sharing "UK Road Safety, Darrell Wolfe Analysis, Google Drive Files")
 -   Some final data story format... Slides? Rmd to PDF?
     Undecided.
 
