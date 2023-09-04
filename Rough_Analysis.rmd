@@ -1,14 +1,26 @@
+---
+Title: UK Road Safety Data
+Subtitle: Analysis
+Author: Darrell G Wolfe
+Project: Amplify Interview
+editor_options:
+  markdown:
+    wrap: 65
+output: word_document
+---
+
 # UK Road Safety Data
 
-------------------------------------------------------------------------
+-----------------------------------------------------------------
 
 ### Important Information
 
-The UKRoadSafetyData.zip was provided to me to use as test data for analysis practice and demonstration.
+The UKRoadSafetyData.zip was provided to me to use as test data
+for analysis practice and demonstration.
 
 #### Tools
 
--   Microsoft Sequal Server Management Studio
+-   Microsoft SQL Server Management Studio
 -   Microsoft Visual Studio 2022
 -   Microsoft Excel (Power Query, CSVs)
 -   Posit RStudio
@@ -19,53 +31,234 @@ The UKRoadSafetyData.zip was provided to me to use as test data for analysis pra
 -   SQL
 -   R
 
+-----------------------------------------------------------------
 
-------------------------------------------------------------------------
+### Dataset First Impressions
 
-### ETL First Impressions
-
--   Upon receiveing and extracting the 'UKRoadSafetyData.zip' file, I notice there are additional zip files.
+-   Upon receiving and extracting the 'UKRoadSafetyData.zip'
+    file, I notice there are additional zip files.
 
 -   Within each zip file is a single .csv or .xls file.
 
--   Several of these files are missing naming conventions that match other similar files.
-    + Renamed files for consistency if needed later.
+-   Several of these files are missing naming conventions that
+    match other similar files.
 
--   The 2015 data is in a single zip, and these are also not following later file naming conventions, and yet more 2015 files exist with apparently duplicate data.
-    +   Both 2015 Accidents files begin with '201501BS70001' in cell A2 and contain 140057 rows. 
-    +   But without looking further, there is not guarantee these have exactly duplicate data. This will require review.
-    +   Checked through Power Query, matching both sets of data on for each duplicate (Accidents, Casualties, and Vehicles for 2015). 
-    +   Both sets are a perfect Match. Only need to import one set.
+    -   Renamed files for consistency if needed later.
 
--   The Variable Lookup is a set of codes tables. One question is whether I will want to keep these as separate tables, or perform a single codes_table combination.
-    +   The codes tables can remain separate, but it would require more write scripts. 
-    +   If I combine them into a single table, they could be more manageable on the import.
-    +   However, I may not need to import these into my database. They may only be needed while visualizing the findings, in which case I can wait until I import them to Tableau. TBD.
+-   The 2015 data is in a single zip, and these are also not
+    following later file naming conventions, and yet more 2015
+    files exist with apparently duplicate data.
 
-------------------------------------------------------------------------
+    -   Both 2015 Accidents files begin with '201501BS70001' in
+        cell A2 and contain 140057 rows.
+    -   But without looking further, there is not guarantee these
+        have exactly duplicate data. This will require review.
+    -   Checked through Power Query, matching both sets of data
+        on for each duplicate (Accidents, Casualties, and
+        Vehicles for 2015).
+    -   Both sets are a perfect Match. Only need to import one
+        set.
+
+-   The Variable Lookup is a set of codes tables. One question is
+    whether I will want to keep these as separate tables, or
+    perform a single codes_table combination.
+
+    -   The codes tables can remain separate, but it would
+        require more write scripts.
+    -   If I combine them into a single table, they could be more
+        manageable on the import.
+    -   However, I may not need to import these into my database.
+        They may only be needed while visualizing the findings,
+        in which case I can wait until I import them to Tableau.
+        TBD.
+
+-----------------------------------------------------------------
 
 ### Extract, Transform, Load (ETL)
 
 #### Visual Studio 2022 + SQL
 
--   Created three tables
+-   Created three tables uk_accidents uk_vehicles uk_casualties
+
 uk_accidents
-uk_vehicles
+
+```{sql uk_accidents, eval=FALSE, include=TRUE}
+
+/* 
+I had a lot of trouble with the Date column 
+but finally manged to run through steps in Power Query and SQL
+that worked.
+*/
+--DROP TABLE uk_accidents
+--Date VARCHAR(15),
+--Date DATE,
+
+CREATE TABLE uk_accidents (
+    Accident_Index VARCHAR(60),
+    Location_Easting_OSGR INT,
+    Location_Northing_OSGR INT,
+    Longitude FLOAT,
+    Latitude FLOAT,
+    Police_Force INT,
+    Accident_Severity INT,
+    Number_of_Vehicles INT,
+    Number_of_Casualties INT,
+    Date VARCHAR(15), 
+    Day_of_Week INT,
+    Time TIME,
+    Local_Authority_District INT,
+    Local_Authority_Highway VARCHAR(20),
+    First_Road_Class INT,
+    First_Road_Number INT,
+    Road_Type INT,
+    Speed_limit INT,
+    Junction_Detail INT,
+    Junction_Control INT,
+    Second_Road_Class INT,
+    Second_Road_Number INT,
+    Pedestrian_Crossing_Human_Control INT,
+    Pedestrian_Crossing_Physical_Facilities INT,
+    Light_Conditions INT,
+    Weather_Conditions INT,
+    Road_Surface_Conditions INT,
+    Special_Conditions_at_Site INT,
+    Carriageway_Hazards INT,
+    Urban_or_Rural_Area INT,
+    Did_Police_Officer_Attend_Scene_of_Accident INT,
+    LSOA_of_Accident_Location VARCHAR(60)
+);
+
+
+
+```
+
 uk_casualties
 
--   Importing Accidents 2016 ran into an issue with Speed Limit column, where there were strings of NULL intead of true null values. 
-    +   Same issue with the 2017 Accidents in the Lat/Long columns.
-    +   I ran a find/replace NULL for "" on the entire workbook.
+```{sql uk_casualties, eval=FALSE, include=TRUE}
+
+--DROP TABLE uk_vehicles
+
+CREATE TABLE uk_casualties (
+    Accident_Index VARCHAR(20),
+    Vehicle_Reference INT,
+    Casualty_Reference INT,
+    Casualty_Class INT,
+    Sex_of_Casualty INT,
+    Age_of_Casualty INT,
+    Age_Band_of_Casualty INT,
+    Casualty_Severity INT,
+    Pedestrian_Location INT,
+    Pedestrian_Movement INT,
+    Car_Passenger INT,
+    Bus_or_Coach_Passenger INT,
+    Pedestrian_Road_Maintenance_Worker INT,
+    Casualty_Type INT,
+    Casualty_Home_Area_Type INT,
+    Casualty_IMD_Decile INT,
+);
+```
+
+uk_vehicles
+
+```{sql uk_vehicles, eval=FALSE, include=TRUE}
+--DROP TABLE uk_casualties
+
+CREATE TABLE uk_vehicles (
+    Accident_Index VARCHAR(20),
+    Vehicle_Reference INT,
+    Vehicle_Type INT,
+    Towing_and_Articulation INT,
+    Vehicle_Manoeuvre INT,
+    Vehicle_Location_Restricted_Lane INT,
+    Junction_Location INT,
+    Skidding_and_Overturning INT,
+    Hit_Object_in_Carriageway INT,
+    Vehicle_Leaving_Carriageway INT,
+    Hit_Object_off_Carriageway INT,
+    First_Point_of_Impact INT,
+    Was_Vehicle_Left_Hand_Drive INT,
+    Journey_Purpose_of_Driver INT,
+    Sex_of_Driver INT,
+    Age_of_Driver INT,
+    Age_Band_of_Driver INT,
+    Engine_Capacity_CC INT,
+    Propulsion_Code INT,
+    Age_of_Vehicle INT,
+    Driver_IMD_Decile INT,
+    Driver_Home_Area_Type INT,
+    Vehicle_IMD_Decile INT,
+);
+```
+
+-   Importing Accidents 2016 ran into an issue with Speed Limit
+    column, where there were strings of NULL instead of true null
+    values.
+
+    -   Same issue with the 2017 Accidents in the Lat/Long
+        columns.
+    -   In Power Query, I ran a find/replace NULL for "" on the
+        entire workbook.
 
 -   Accidents table: Date
-    +   Dates were formatted as text in dd/mm/yyyy format. When importing and converting, they were truncated.
-    +   In power query, ran a transformation and re-saved the CSVs.
-    +   After some difficulty getting dates formatting, and a bit of help from Google and ChatGPT-4, the dates finally worked out.
 
--   Checking for duplicates in the other tables revealed that while there are duplicate Accident_Index IDs, they are properly not duplicate observations.
-    +   Running the following script is an example of how they are not actually duplicates:
+    -   Dates were formatted as text in dd/mm/yyyy format. When
+        importing and converting, they were truncated. Niether
+        Excel or SQL were playing nicely with this format.
+    -   In Power Query, I ran a transformation and re-saved the
+        CSVs.
+    -   After some difficulty getting dates formatting, and a bit
+        of help from Google and ChatGPT-4, the dates finally
+        worked out.
+    -   The final CSV format was yyyy-mm-dd, then imported into
+        my database as a VARCHAR
+    -   Then the final conversion was performed in SQL.
 
-``` {sql}
+```{sql date-issue, eval=FALSE, include=TRUE}
+
+/* 
+I had a lot of trouble with the Date column 
+but finally manged to run through steps in Power Query and SQL
+that worked.
+*/
+--DROP TABLE uk_accidents
+--Date VARCHAR(15),
+--Date DATE,
+
+SELECT Date 
+FROM uk_accidents 
+WHERE ISDATE(Date) = 0
+
+
+-- Update the Date column to swap the day and month
+UPDATE uk_accidents
+SET Date = CONCAT(
+    SUBSTRING(Date, 1, 4), '-', -- Year
+    SUBSTRING(Date, 9, 2), '-', -- Day
+    SUBSTRING(Date, 6, 2)      -- Month
+)
+WHERE ISDATE(Date) = 0;
+
+
+ALTER TABLE uk_accidents ADD Date_New DATE;
+
+UPDATE uk_accidents SET Date_New = CAST(Date AS DATE);
+
+--UPDATE uk_accidents SET Date_New = CONVERT(DATE, Date, 103);  -- 103 is for dd/mm/yyyy format
+
+ALTER TABLE uk_accidents DROP COLUMN Date;
+
+EXEC sp_rename 'uk_accidents.Date_New', 'Date', 'COLUMN';
+
+```
+
+-   Checking for duplicates in the other tables revealed that
+    while there are duplicate Accident_Index IDs, they are not
+    duplicate observations. Each row is a unique observation.
+
+    -   Running the following script is an example of how they
+        are not actually duplicates:
+
+```{sql check-dups, eval=FALSE, include=TRUE}
   WITH CTE_CheckDupsC AS (
     SELECT *
 --    c.Accident_Index
@@ -81,31 +274,528 @@ uk_casualties
   ORDER BY CTE_CheckDupsC.Accident_Index
 ```
 
+-----------------------------------------------------------------
 
-------------------------------------------------------------------------
+### Analysis Roadmap
+
+1.  Understand the Data: Make notes about each variable, what is
+    it, what signficance does it hold, what potential
+    calculations or analysis can be done on them.
+
+2.  Generate Hypotheses: What relationships, correlations, can we
+    expect to find? Are accidents higher in certain regions, road
+    conditions, etc? Are certain vehicles more likely to be in an
+    accident?
+
+3.  Exploratory Data Analysis (EDA): Using SQL, R, and Tableau to
+    analyze the datasets, we summarize the data and find
+    patterns. Min, Max, Sum, Count, Mean, Median, etc. will be
+    helpful.
+
+4.  Visualization: Once we have some key insights, start creating
+    visualizations (first in R, then in Tableau) to see if
+    anything visually stands out as interesting or if a story
+    begins to emerge.
+
+5.  Story Drafting: Draft the narrative around these findings.
+    What story is the data telling? Why is it important? What
+    recommendations or observations can we make?
+
+6.  Review and Refine: Review the data story several times,
+    refine it to make sure it's compelling and understandable.
+    Are the visualizations telling the story on their own?
+
+7.  Presentation: Put all these findings into a presentation
+    format. Keep it simple but informative. Use your
+    visualizations to support your story. Keep the script out of
+    the visualizations themselves but in a presentable format for
+    those who are not able to attend the presentation.
+
+Questions to Consider:
+
+Conditions
+
+-   Roads: Wet/Dry, Urban/Rural, Maintained/Deferred-Maintenance,
+
+-   Cities, Regions, Police Depts, Deprivation Index, do any of
+    these show higher accidents or lower?
+
+-   Are any types of crossings or conditions more likely to cause
+    accidents?
+
+-   Do Seasons, Days, Times of Day, Light, or Weather play a
+    role?
+
+People
+
+-   Does Poverty index, age, sex, or any other human factor play
+    a role in accidents?
+
+-----------------------------------------------------------------
 
 ### Analysis
 
-#### RStudio + R
+#### R & RStudio
+
+Transitioning to RStudio for Analysis
+
+-----------------------------------------------------------------
+
+##### Connecting to R RStudio
+
+Loading Libraries
+
+```{r libraries, eval=TRUE, include=TRUE}
+
+# LOAD LIBRARIES
+library(DBI)
+library(odbc)
+library(RODBC)
+library(tidyverse)
+#library(dplyr)
+#library(ggplot2)
+#library(scales)
+#library(sqldf)
+#library(ggmap)
+#library(geosphere)
+#library(here)
+#library(skimr)
+#library(janitor)
+#library(Tmisc)
+
+```
+
+Connecting R & RStudio to the database
+
+```{r connecting-to-r, eval=TRUE, include=TRUE}
+# ESTABLISH CONNECTION TO MY LOCAL DATABASE
+
+connection <- odbcDriverConnect("driver={SQL Server};server=LAPTOP-76LHVPRQ\\SQLEXPRESS;database=UK_RoadSafety;trusted_connection=true")
+
+```
+
+-----------------------------------------------------------------
+
+##### Assign Dataframes
+
+Assigning the new cleaned database tables as R dataframes:
+
+-   UK_AccidentData
+
+-   UK_CasualtyData
+
+-   UK_VehicleData
+
+```{r dataframe-accident, eval=TRUE, include=TRUE}
+
+# ASSIGN THE DATABASE TABLE AS A DATAFRAME (df) VARIABLE FOR EASIER RECALL
+
+UK_AccidentData <- sqlFetch(connection, "dbo.uk_accidents")
+
+UK_CasualtyData <- sqlFetch(connection, "dbo.uk_casualties")
+
+UK_VehicleData <- sqlFetch(connection, "dbo.uk_vehicles")
+
+```
+
+-----------------------------------------------------------------
+
+##### Column Names (Variables)
+
+-   What variables do each dataset contain?
+-   How are they related?
+-   What might they tell us?
+
+The Accident Index acts as a key. The Accident Table is the key
+table, there is one Accident Index for each observation (row) in
+this table. The Casualty and Vehicle tables refer back to this
+Accident Index key to tie their data into specific accidents. The
+Number of Vehicles and Number of Casualties are essentially a
+count of the other related data from the other two tables.
+
+The Vehicle Reference builds on the Accident Index. It is
+contained in both the Vehicle Table and Casualty Table. For each
+accident, individual vehicles are numbered (Vehicle 1, Vehicle 2,
+etc.). This allows us to see how many vehicles were involved in
+any given accident (from the Vehicle Table) while maintaining a
+simple Accident Index in the origin table. The Casualty Table can
+then assign the casualty to which vehicle was involved in that
+injury.
+
+The Casualty Reference only exists on the Casualty Table, and
+serves as an index for the individual who was injured.
+
+There are also Key Tables/Codes Tables. During my work in R, I
+will reference them via CSV/Excel to understand what each one is,
+as I do not need them for determining averages or means or
+counts. However, when visualizing this data, I will import these
+into Tableau in a star schema for more accurate labeling.
+
+```{r dataframe-column-names, eval=TRUE, include=TRUE}
+
+colnames(UK_AccidentData)
+
+colnames(UK_CasualtyData)
+
+colnames(UK_VehicleData)
+
+```
+
+-----------------------------------------------------------------
+
+##### UK_Road Safety Data Summary
+
+In comparing certain variable's mean and median, we can make some
+preliminary statements.
+
+Summary of UK Accidents
+
+-   Accident Severity Code 3 is Slight. The Median (3) and Mean
+    (2.81) indicate that the average accident only presents
+    Slight injuries.
+
+-   Most accidents involve two vehicles and do involve at least
+    one injury.
+
+-   Day of Week: I'd like to see a visual count on this for the
+    "difference" but most accidents occur on a Wednesday (Median
+    4, Mean 4.104, Code 4 is Wednesday).
+
+-   The Mean (37.64) and Median (30) speed limits may indicate
+    the "average" accident occurs at these lower limits. However,
+    a count graphic may indicate whether there was a slight
+    difference or major difference in accidents counts for each
+    limit range.
+
+-   Light Conditions. Code 1 is light, Codes 4-7 indicate various
+    lighting conditions in the dark. The Median (1) and Mean
+    (1.993) may indicate the average accident occurs during the
+    day or with good lighting. Graphing this data may help
+    illuminate this key.
+
+-   Weather Conditions. Code 1 is Fine. Codes 2-8 are other than
+    fine. 9 is unknown. Median (1) and Mean (1.579) indicate
+    weather is not a major influence "on average", but graphing
+    this will show any trends or difference in the data.
+
+-   Police Attendance would be an after-the-fact variable, so
+    while it may indicate the seriousness of the accident, it
+    would not be predictive in any way for preventing accidents.
+    That being said, it does appear the police were involved in
+    the average accident, Median (1), Mean (1.251), with Code 1
+    being Yes, and Code 2 being No.
+
+Summary of UK Acc*ident Casualty*
+
+*Note: By "Casualty", this dataset means "Injury" not necessarily
+"Death". They are segregated into Fatality, Serious, and Slight.*
+
+-   Sex of Casualty Code 1, Male, Code 2, Female. Median (1),
+    Mean (1.406); this does not tell me much right now. I'd like
+    to see the data visualized and see if this acts as a
+    component against or with other variables.
+
+-   Age of Casualty: Median 33, Mean 36.48. This does seem to
+    indicate something. Although, this is the prime working age,
+    so it's possible this has to do with the number of humans in
+    this age range in the vicinity and not anything to do with
+    their driving. High probability with higher representation.
+    As with the other table, when a casualty is involved, it
+    appears to be serious or slight, but Fatalities are not the
+    average. Although, with the Insurance rates higher for
+    "teens" I would have expected this to trend that direction. I
+    would like to see the full variable visualized.
+
+-   Pedestrian Location & Movement reflect Median of 0, and Mean
+    of 0.714/0.5418. Pedestrians are rarely involved.
+
+-   Road Maintenance workers are rarely involved. Although, if a
+    road working company wanted to analyze the data for
+    situations in which they could reduce their workers being
+    hurt, they could slice the data for only these situations and
+    see what trends emerge.
+
+-   Home Area (1 Urban, 2 Small Town, 3 Rural) - Urban cities
+    seem to be the average place for accidents.
+
+-   IMD 4 / 3.714 may indicate a trend toward more casualties in
+    mid-lower income regions? Needs further visualization
+    analysis.
+
+Summary of UK Vehicles in Accidents
+
+-   Vehicle Type 9/9.804 is Car. Most people on most trips are in
+    a car, so this holds to the expected pattern. Could be
+    interesting to visualize this data variable to see what the
+    second or third most common types are. Motorcycle, Van, Taxi,
+    etc.
+
+-   !!! Manoeuvre (Reversing, Parked, Waiting, Slowing, U-Turn,
+    etc.). Anecdotally, when I was a young driver most of my
+    accidents were in parking lots while reversing. I later
+    learned this is common for ADHD neurotypes. This may be
+    interesting to follow.
+
+-   Vehicle Location Median 0 means the central data point is on
+    the main roads. Not surprising.
+
+-   Junction Median of 1 (Approaching or waiting at a junction)
+    may indicate this is a common place for accidents. I was
+    rear-ended more than once while waiting at a stoplight.
+
+-   Journey or Purpose Unknown (6) may make this a useless
+    variable?
+
+-   Several variables show no indication of relevance, all being
+    zero median.
+
+-   Age of Driver (35/35.49) matches the Casualty table.
+    Interesting.
+
+-   Propulsion Code - Mostly Gasoline/Petrol cars. Not shocking.
+
+-   Age of Vehicle - Average car was 5.569 years old. That's may
+    be a reflection of the average age of cars in general, and
+    may only be relevant to the accident data if this was
+    compared to the general average age of cars in the UK. If
+    they were divergent, then it would be relevant. Otherwise it
+    is a reflection and not indicative of anything useful.
+
+-   Engine Capacity CC - Median (1390), Mean (1422) actually mean
+    nothing to me because I don't know anything about Engine CCs
+    or how that's relevant. And as with Age of Vehicle, may be a
+    reflection and not an indication.
+
+```{r uk_accident_data_summary, eval=TRUE, include=TRUE}
+
+summary(UK_AccidentData)
+
+summary(UK_CasualtyData)
+
+summary(UK_VehicleData)
+```
+
+-----------------------------------------------------------------
+
+### New Questions
+
+Based on the summary review, here are some questions to pursue.
+
+-   Accidents Table
+    -   How many accidents involve 0, 1, 2, or more vehicles?
+    -   How many accidents involve a casualty/injury of any kind?
+    -   How many accidents occur at various speed limit ranges?
+    -   How many accidents occur on which days of the week?
+    -   How many accidents occur at various light conditions?
+    -   How many accidents occur at various weather conditions?
+    -   How many accidents for each IMD?
+-   Casualty Table
+    -   How many casualties for each sex/gender?
+    -   How many casualties for each age band?
+    -   How many casualties for each Home Areas?
+    -   How many casualties for each IMD?
+-   Vehicles Table
+    -   How many of each vehicle type? We know cars are most
+        common, but which are 2nd or 3rd?
+    -   Which Manoeuvres are most common?
+    -   Besides main roads, which other Locations are common?
+    -   Explore variables, see what else sticks out.
+
+-----------------------------------------------------------------
+
+### UK_AccidentData Variable Analysis
+
+The following represents a look at the counts for occurrences of variables in the UK_AccidentData dataset. Comments above each represent findings.
+
+
+```{r accident-variables, eval=TRUE, include=TRUE}
+   
+# As expected, most accidents involved two vehicles, then one, then three.
+# Numbers drop off significantly after this.
+UK_AccidentData %>% 
+  count(Number_of_Vehicles)
+
+# At first glance, this doesn't appear to say much. Weekends are fewer.
+UK_AccidentData %>% 
+  count(Day_of_Week)
+
+# There are a LOT more accidents at 30 MPH than at any other speed limit.
+UK_AccidentData %>% 
+  count(Speed_limit)
+
+# The vast majority of accidents occur during the day (when most are driving)
+# Next is darkness in well lit aready (again, where most people are driving)
+UK_AccidentData %>% 
+  count(Light_Conditions)
+
+# The lion share of accidents occur when weather is fine (when most people are driving)
+# Of the remaining, the most occur in rain.
+UK_AccidentData %>% 
+  count(Weather_Conditions)
+
+# Not useful, needs better grouping. 
+#UK_AccidentData %>% 
+#  count(Time)
+
+# This will be very useful for Visualization in Tableau, 
+# added this new column to table in SQL
+
+UK_AccidentData %>% 
+  mutate(TimeGroup = case_when(
+    Time >= "06:00:00.0000000" & Time < "9:00:00.0000000" ~ "Morning_Commute",
+    Time >= "09:00:00.0000000" & Time < "11:00:00.0000000" ~ "Morning_Late",
+    Time >= "11:00:00.0000000" & Time < "13:00:00.0000000" ~ "Lunch_Hours",
+    Time >= "13:00:00.0000000" & Time < "17:00:00.0000000" ~ "Afternoon",
+    Time >= "17:00:00.0000000" & Time < "20:00:00.0000000" ~ "Evening_Commute",
+    Time >= "20:00:00.0000000" & Time < "21:00:00.0000000" ~ "Evening_Late",
+    TRUE ~ "Late_Night"
+  )) %>% 
+  count(TimeGroup)
+
+# Most accidents occur in the Afternoon (1p-5p)
+# Second most occur during the evening commute (5p-8p)
+
+UK_AccidentData %>% 
+  count(TimeGroup)
+
+
+# The following three seem evenly dispersed. 
+# Maybe let's get a dashboard with these?
+# See if anything pops out visually?
+
+# Seems fairly evenly dispersed?
+UK_AccidentData %>% 
+  count(Police_Force) %>% 
+  arrange(-n) %>% 
+  head(10)
+
+# Seems fairly evenly dispersed?
+
+UK_AccidentData %>% 
+  count(Local_Authority_District) %>%
+  arrange(-n) %>%
+  head(10)
+
+
+# Seems fairly evenly dispersed?
+UK_AccidentData %>% 
+  count(Local_Authority_Highway) %>%
+  arrange(-n) %>%
+  head(10)
+
+# No Intersection & T Intersections are most common accident types.
+# That is surprising, given the MPH 30 thing? Let's look at MPH, Junctions, and Time. 
+
+UK_AccidentData %>% 
+  count(Junction_Detail)
+
+# Mostly missing data (-1)
+UK_AccidentData %>% 
+  count(Junction_Control)
+
+# Mostly missing data (-1), filter these out.
+# With (-1, missing data) filtered out, these show a strong preference for 4.
+# Uncontroled intersections lead the way.
+UK_AccidentData %>% 
+  filter(Junction_Control != -1) %>% 
+  count(Junction_Control)
+
+# One lane roads dominate
+UK_AccidentData %>% 
+  count(Road_Type)
+
+# Most accidents (383,735) occurred on dry roads.
+# 2nd Most (131,236) on wet roads.
+# As these are the two most common road conditions, that is only so helpful to know.
+UK_AccidentData %>% 
+  count(Road_Surface_Conditions)
+
+# Roughly 3/4 of accidents had a Police Officer
+# Roughly 1/4 did not
+# A fraction had no police officer but did self-report via a form.
+UK_AccidentData %>% 
+  count(Did_Police_Officer_Attend_Scene_of_Accident)
+
+
+```
 
 
 
-------------------------------------------------------------------------
+-----------------------------------------------------------------
 
-###
+### UK_VehicleData Variable Analysis
 
-------------------------------------------------------------------------
+The following represents a look at the counts for occurrences of variables in the UK_VehicleData dataset. Comments above each represent findings.
+
+```{r vehicle-variables, eval=TRUE, include=TRUE}
+
+# TBC
+
+```
+
+-----------------------------------------------------------------
+
+### UK_CasualtyData Variable Analysis
+
+The following represents a look at the counts for occurrences of variables in the UK_CasualtyData dataset. Comments above each represent findings.
+
+```{r casualty-variables, eval=TRUE, include=TRUE}
+
+# TBC
+
+```
+
+
+-----------------------------------------------------------------
 
 ### xxxxxx
 
-------------------------------------------------------------------------
+
+
+
+
+-----------------------------------------------------------------
 
 ### xxxxxx
 
-------------------------------------------------------------------------
+
+-----------------------------------------------------------------
 
 ### xxxxxx
 
-------------------------------------------------------------------------
+
+-----------------------------------------------------------------
 
 ### xxxxxx
+
+
+-----------------------------------------------------------------
+
+### xxxxxx
+
+
+-----------------------------------------------------------------
+
+### xxxxxx
+
+
+-----------------------------------------------------------------
+
+### xxxxxx
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
