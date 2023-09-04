@@ -1,16 +1,42 @@
-# Amplify_Interview_Test
-## UK Road Safety Data_Interview Test
+#UK Road Safety Data
 
-### Instructions
-We are delighted to invite you to the next phase of our interview process. You will find a link to UK Road Safety Data below. Please use the data below to showcase the following skills:  
+-----------------------------------------------------------------
+
+###Important Information
+
+The UKRoadSafetyData.zip was provided to me to use as test data for analysis practice and demonstration of my skillset.
+
+Instructions: "Ultimately the goal is to show us something interesting via a dashboard/report using your favorite tools in an approximately 20-minute presentation. There is no traditional “right answer”, we are looking for how you work with data and communicate insights."
+
+Specifically, I was to analyze the dataset(s) for anything interesting, build a presentation, and highlight my abilities in the following areas:
 
 -  ETL Process  
+  +  (see the .Rmd file: Technical Review)
 -  Data Visualizations 
--  Data Modeling 
+  +  (see the Tableau Public Link and associated Power Point Presentation).
+-  Data Modeling
+  +  (see the .Rmd file, GitHub SQL folders, and the Schematic in the Power Point).
 -  Time Management
+  +  (see the write up in the Power Point).
 
-[Link to dataset -](https://interviewfiles.blob.core.windows.net/ukroadsafetydata/UKRoadSafetyData.zip)
+####Tools
 
-Ultimately the goal is to show us something interesting via a dashboard/report using your favorite tools in an approximately 20-minute presentation. There is no traditional “right answer”, we are looking for how you work with data and communicate insights.  
+-   Microsoft SQL Server Management Studio
+-   Microsoft Visual Studio 2022
+-   Microsoft Excel (Power Query, CSVs)
+-   Posit RStudio
+-   Tableau Public
 
-Let me know if you have any questions!
+####Languages
+
+-   SQL
+-   R
+
+####Technical Review
+
+See the Technical_Review.Rmd:
+https://github.com/darrellwolfe/UK_RoadSafety/blob/main/Technical_Review_WriteUp.rmd
+
+
+
+
