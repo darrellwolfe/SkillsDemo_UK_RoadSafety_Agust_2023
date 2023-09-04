@@ -1,8 +1,8 @@
-# UK Road Safety Data
+#UK Road Safety Data
 
 -----------------------------------------------------------------
 
-### Important Information
+###Important Information
 
 The UKRoadSafetyData.zip was provided to me to use as test data for analysis practice and demonstration of my skillset.
 
@@ -19,7 +19,7 @@ Specifically, I was to analyze the dataset(s) for anything interesting, build a 
 -  Time Management
   +  (see the write up in the Power Point).
 
-#### Tools
+####Tools
 
 -   Microsoft SQL Server Management Studio
 -   Microsoft Visual Studio 2022
@@ -27,12 +27,12 @@ Specifically, I was to analyze the dataset(s) for anything interesting, build a 
 -   Posit RStudio
 -   Tableau Public
 
-#### Languages
+####Languages
 
 -   SQL
 -   R
 
-#### Technical Review
+####Technical Review
 
 See the Technical_Review.Rmd:
 https://github.com/darrellwolfe/UK_RoadSafety/blob/main/Technical_Review_WriteUp.rmd
