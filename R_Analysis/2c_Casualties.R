@@ -107,8 +107,75 @@ How many casualties for each sex/gender?
   How many casualties for each IMD?
 
 
-  UK_CasualtyData 
+UK_CasualtyData 
   
+colnames(UK_CasualtyData)
+
+# Roughly double M vs F
+UK_CasualtyData %>% 
+  count(Sex_of_Casualty)
   
-  
-  
+# The data set is too long, using age bands is better.
+# Unlike the Time in the Accident table, this one is already grouped.
+#UK_CasualtyData %>% 
+ # count(Age_of_Casualty)
+
+# Probably a bell curve? 
+# Highest at 6 (26-35) and 7 (36-45) with tapering on both sides.
+# Probably a reflection of the age average among the general population.
+UK_CasualtyData %>% 
+  count(Age_Band_of_Casualty)
+
+# Casualties roughly divided between Vehicle 1 & 2
+# Some casualties in multi-car crashes, with fewer and fewere the more cars involved.
+# As expected.
+UK_CasualtyData %>% 
+  count(Vehicle_Reference)
+
+# Most casualties "Not Car Passenger"? 
+# Does that mean they weren't in THIS car, or weren't in any car?
+# Does that mean most were pedestrians? But that doesn't align with other data?
+UK_CasualtyData %>% 
+  count(Car_Passenger)
+
+# Most (vast majority) not a Pedestrian, as stated above.
+UK_CasualtyData %>% 
+  count(Pedestrian_Location)
+
+# Most (vast majority) not a Pedestrian, as stated above.
+UK_CasualtyData %>% 
+  count(Pedestrian_Movement)
+
+# Vast majority not a bus or coach passenger, as expected.
+UK_CasualtyData %>% 
+  count(Bus_or_Coach_Passenger)
+
+# Urban 485,508
+# Small Town 52,300
+# Rural 65,163
+# Large number no data
+UK_CasualtyData %>% 
+  count(Casualty_Home_Area_Type)
+
+# For those with data, seems evenly spread Poverty to Affluent
+UK_CasualtyData %>% 
+  count(Casualty_IMD_Decile)
+
+# Driver 450,659
+# Passenger 154,656
+# Pedestrian 93,848
+UK_CasualtyData %>% 
+  count(Casualty_Class)
+
+# Fatality 7,099
+# Seriously Injured 96,587 
+# Slight Injury 595,477
+# This rings true to logic, but I actually thought fatalities would have been higher.
+UK_CasualtyData %>% 
+  count(Casualty_Severity)
+
+# At least 347 road workers died 2015-2018
+# While small, that's not nothing given the population size.
+UK_CasualtyData %>% 
+  count(Pedestrian_Road_Maintenance_Worker)
+

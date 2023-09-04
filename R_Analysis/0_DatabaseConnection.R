@@ -32,10 +32,14 @@ connection <- odbcDriverConnect("driver={SQL Server};server=LAPTOP-76LHVPRQ\\SQL
 # ASSIGN THE DATABASE TABLE AS A DATAFRAME (df) VARIABLE FOR EASIER RECALL
 
 UK_AccidentData <- sqlFetch(connection, "dbo.uk_accidents")
+write.csv(UK_AccidentData, "C:/Users/darre/My Drive (dwolfe.data@gmail.com)/!Datasets/Amplify_Interview_UKRoadSafety/CLEANED DATA/UK_AccidentData.csv", row.names = FALSE)
+
 
 UK_CasualtyData <- sqlFetch(connection, "dbo.uk_casualties")
+write.csv(UK_CasualtyData, "C:/Users/darre/My Drive (dwolfe.data@gmail.com)/!Datasets/Amplify_Interview_UKRoadSafety/CLEANED DATA/UK_CasualtyData.csv", row.names = FALSE)
 
 UK_VehicleData <- sqlFetch(connection, "dbo.uk_vehicles")
+write.csv(UK_VehicleData, "C:/Users/darre/My Drive (dwolfe.data@gmail.com)/!Datasets/Amplify_Interview_UKRoadSafety/CLEANED DATA/UK_VehicleData.csv", row.names = FALSE)
 
 
 summary(UK_AccidentData)
