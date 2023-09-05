@@ -1522,6 +1522,28 @@ if (window.hljs) {
 
 
 
+<style type="text/css">
+
+div.csl-bib-body { }
+div.csl-entry {
+clear: both;
+}
+.hanging div.csl-entry {
+margin-left:2em;
+text-indent:-2em;
+}
+div.csl-left-margin {
+min-width:2em;
+float:left;
+}
+div.csl-right-inline {
+margin-left:2em;
+padding-left:1em;
+}
+div.csl-indent {
+margin-left: 2em;
+}
+</style>
 
 
 
@@ -3517,23 +3539,89 @@ interesting.</p>
 happens when we begin visualizing these insights and looking for stuff I
 cannot do in R (because Google maps requires a paid API to use the plot
 map in R).</p>
-<p>TBD…</p>
 <hr />
 </div>
 <div id="the-data-stories" class="section level3">
 <h3>The Data Stories</h3>
 <p>The following data stories came to light throughout this
-analysis…</p>
+analysis:</p>
+<p>In 2015-2018, there were an aggregate total of 151.269 accidents and
+593.391 casualties.</p>
+<p>Accidents decreased dramatically during these years, possibly
+indicating a combination of safer vehicles, driver awareness, new laws,
+and other factors.</p>
+<p>There were no indications that any particular month or season was
+more dangerous.</p>
+<p>Weekdays are the most dangerous, especially Fridays.</p>
+<p>While Fatal and Serious accidents do not show a preference for the
+day of the week, Slight injuries are reported at higher frequency on
+weekdays, with the highest on Fridays. Although the number of accidents
+have steadily dropped from 2015-2018 (the timeframe of the study).</p>
+<p>Afternoon and Evening Commutes are most dangerous. The hours of 1p to
+5p are the most likely times for an accident, followed closely by the
+hours of 5p to 8p. Most accidents occurred during daylight, following by
+well lit nights, which coincides with these findings.</p>
+<p><em>Note: the “Evening Late/Late Night” categories could have been
+spread across times better. This was an oversight, and would be
+corrected upon an updated version.</em></p>
+<p>Types of Roads and Lanes did not show any particularly interesting
+patterns, but two maps were included as reference.</p>
+<p>While there were more male drivers than female, and more male
+casualties than female, the distribution of injuries Fatal, Serious, and
+Slight were correlated to those numbers and did not reveal anything
+interesting.</p>
+<p>However, while males were the driver more often, females were injured
+as passangers more often. And rear-seat injuries were far less common
+than front seat injuries.</p>
+<p>One vehicle Manoeuvre shows to be involved in more accidents than any
+other, “Going ahead”, which indicates a state known as Road
+Hypnosis.<span class="citation">(Shi et al. 2023)</span></p>
+<p>Ages: While at first ages seem to show more accidents for those 26-35
+with a bell curve on either side, this also correlates with the working
+population. Therefore, this may only be a reflection and not an
+indication. When comparing this to the population data (from WikiMedia
+Commons), this guess held true.</p>
+<p>Speed Limit: One speed limit (30 MPH (or is that KMH?) has a higher
+representation of accidents than all others. This seems highly
+correlated with the fact that most accidents occur in urban city areas
+and during afternoon or commute hours.</p>
+<p>Vehicles 26-35 years old played an outsized role in accidents,
+however, the age bands showed a bell curve, which is likely an
+indication of the population of vehicles available for accident
+incidents.</p>
+<p>The Index of Multiple Deprivation (IMD) did show that accidents in
+deprived regions were higher, this may reflect multiple factors
+including access to safer vehicles and local budgets for road
+maintenance.</p>
+<p>Accidents involving one vehicle were most common, followed by those
+involving two, with a representation for third vehicles. Very few
+involved more than three.</p>
+<p>Surprisingly, most accidents occurred with one vehicle in daylight
+hours on dry single-lane roads, while driving straight ahead (not while
+navigating a turn or intersection).</p>
+<p>This reminded me of a term I had heard called Road Hypnosis; which is
+especially important in North Idaho, USA. This occurs when the driver is
+taking a well known route and driving straight ahead. The human brain
+has evolved to only store important information, and a well-known
+straight route does not fall into this category. The brain goes into a
+form of autopilot, and drivers sometimes tell stories of having arrived
+at home after work without remembering the drive. In this auto-pilot
+state, one can miss clues that something has changed or even drift off
+the road entirely.</p>
 <hr />
 </div>
-<div id="the-data-story-bullet-points" class="section level3">
-<h3>The Data Story Bullet Points</h3>
-<p>The key story thread I want to follow for this presentation…</p>
-<hr />
-</div>
-<div id="the-data-story-write-up" class="section level3">
-<h3>The Data Story Write Up</h3>
-<p>The data story starts here…</p>
+<div id="conclusions" class="section level3">
+<h3>Conclusions</h3>
+<p>Some conditions can make it more likely for an accident to occur.</p>
+<p>Driving in the afternoons or on the way home after work.</p>
+<p>Driving on long straight routes in good weather (leading to
+carelessness).</p>
+<p>Driving an older vehicle, in urban city regions, or in areas where
+the IMD index indicates the possibility of dangerous factors.</p>
+<p>Driving in regions where the speed limit is lower may lead to
+accidents (for reasons not investigatged in this analysis).</p>
+<p><em>Note: If a passenger, chosing the rear seat may prevent or lessen
+injury in case of an accident.</em></p>
 <hr />
 </div>
 <div id="presentation" class="section level3">
@@ -3551,8 +3639,7 @@ Topos Creative, LLC)</a></li>
 <li>Tableau Public: Provide link to the Tableau Public presentation for
 the users to click and explore the data.
 <ul>
-<li>Dashboards with various views.</li>
-<li>Data Story</li>
+<li><a href="https://public.tableau.com/app/profile/darrell.wolfe/viz/UKRoadSafetyData_16938634422570/Totals" title="Tableau Public">Link Here</a></li>
 </ul></li>
 <li>GitHub: Provide the GitHub link to this project:
 <ul>
@@ -3568,8 +3655,17 @@ Road Safety, Darrell Wolfe Analysis, Google Drive Files</a></li>
 </ul>
 <hr />
 </div>
-<div id="the-end-of-this-document-but-not-the-data-stories." class="section level3">
-<h3>The End of this document… but not the data stories.</h3>
+<div id="the-end-of-this-document-but-not-the-data-stories." class="section level3 unnumbered">
+<h3 class="unnumbered">The End of this document… but not the data
+stories.</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-shi2023" class="csl-entry">
+Shi, Huili, Longfei Chen, Xiaoyuan Wang, Bin Wang, Gang Wang, and
+Fusheng Zhong. 2023. <span>“Research on Recognition of Road Hypnosis in
+the Typical Monotonous Scene.”</span> <em>Sensors (Basel,
+Switzerland)</em> 23 (3): 1701. <a href="https://doi.org/10.3390/s23031701">https://doi.org/10.3390/s23031701</a>.
+</div>
+</div>
 </div>
 </div>
 
